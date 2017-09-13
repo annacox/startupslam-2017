@@ -1,0 +1,33 @@
+{
+  "scripts": {
+    "build": "./node_modules/.bin/webpack --config ./config/webpack/client.webpack.config.babel.js"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-module-resolver": "^3.0.0-beta.5",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "bowser": "^1.7.3",
+    "find-nearest-file": "^1.0.0",
+    "human-readable-ids": "^1.0.3",
+    "navigator.sendbeacon": "0.0.6",
+    "ramda": "^0.24.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-motion": "^0.5.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-form": "^7.0.4",
+    "webpack": "^3.5.5",
+    "webpack-config-env": "^0.1.0",
+    "webpack-partial": "^2.1.0",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.6.0",
+    "eslint-config-metalab": "^7.0.1"
+  }
+}
