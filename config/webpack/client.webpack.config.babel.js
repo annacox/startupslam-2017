@@ -1,8 +1,12 @@
 import {compose} from 'ramda';
+import {output} from 'webpack-partial';
 import base from './partial/base';
 
 const createConfig = compose(
-  base({name: 'client', target: 'web'})
+  output({
+    publicPath: '/assets',
+  }),
+  base({name: 'main', target: 'web'}),
 );
 
 export default createConfig();

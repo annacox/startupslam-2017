@@ -1,95 +1,23 @@
-// Load up some polyfills for older browsers.
-import 'navigator.sendbeacon';
-import 'whatwg-fetch';
-
-import {hri} from 'human-readable-ids';
-
-if (!localStorage.getItem('defaultIndex')) {
-  localStorage.setItem('defaultIndex', hri.random());
-}
-
-export const indexName = localStorage.getItem('defaultIndex');
+import {handleResponse} from './util';
 
 /**
- * If you have ElasticSearch setup elsewhere you can change
- * this URL to point to your own instance.
+ * Send an analytics event to ElasticSearch. Normally parts of this would be
+ * implemented on your server somewhere instead of calling directly to
+ * ElasticSearch, but for now you can just take this as-is to send  analytics
+ * events out.
+ * @param {String} base URL to index to add event to.
+ * @param {String} type Type of event. This corresponds to whatever mappings you
+ * setup previously.
+ * @param {Object} payload Data for the event. The fields in this correspond to
+ * the properties of the mapping.
+ * @returns {Promise} Result of operation.
  */
-export const baseUrl = [
-  'https://',
-  'search-startupslam-4zqyzoae7nleoc6wbdiscros34.',
-  'us-west-2.es.amazonaws.com',
-  `/${indexName}`,
-].join('');
-
-// Generate a random, persistent visitor id.
-if (!localStorage.getItem('slamid')) {
-  localStorage.setItem('slamid', Math.random().toString(36).substr(2));
-}
-
-const slamId = localStorage.getItem('slamid');
-
-/**
- * Send an analytics event to ElasticSearch. Normally this
- * would be implemented on your server somewhere.
- * @param {String} type Type of event.
- * @param {Object} payload Data for the event.
- * @returns {void}
- */
-export const sendEvent = (type, payload) => {
+export const sendEvent = (base, type, payload) => {
   const body = JSON.stringify(Object.assign({
     '@timestamp': Date.now(),
-    slamId,
   }, payload));
-  // NOTE: We should be using a Blob with the correct
-  // `type` but Chrome doesn't like it and ElasticSearch
-  // is fine with this... soooo....
-  navigator.sendBeacon(`${baseUrl}/${type}`, body);
-};
-
-/**
- * Deal with a fetch response.
- * @param {Object} res Fetch response.
- * @returns {Promise} JSON data from the fetch.
- */
-const handleResponse = (res) => {
-  const body = res.json();
-  if (res.ok) {
-    return body;
-  }
-  return Promise.reject(body);
-};
-
-/**
- * Setup the ElasticSearch index.
- * @returns {void}
- */
-export const setupIndex = () => {
-  fetch(baseUrl, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify({
-      mappings: {
-        pageview: {
-          properties: {
-            '@timestamp': {type: 'date'},
-          },
-        },
-      },
-    }),
-  }).then(handleResponse);
-};
-
-/**
- * Tear down the ElasticSearch index.
- *
- * @returns {void}
- */
-export const removeIndex = () => {
-  fetch(baseUrl, {
-    method: 'DELETE',
-    accept: 'application/json',
+  return fetch(`${base}/${type}`, {
+    body,
+    method: 'POST',
   }).then(handleResponse);
 };

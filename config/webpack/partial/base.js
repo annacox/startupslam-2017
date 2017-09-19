@@ -26,7 +26,6 @@ const base = ({name, target}) => compose(
   // Define chunk file name pattern. Use the content hash as the filename in
   // production web targeted builds to prevent browser caching between releases.
   output({
-    publicPath: `./dist/${name}/`,
     path: path.join(context, 'dist', name),
     ...process.env.NODE_ENV === 'production' && target === 'web' ? {
       filename: '[name].[chunkhash].js',
@@ -40,7 +39,7 @@ const base = ({name, target}) => compose(
   // Define an entry chunk. A `name` property must be defined on the initial
   // config object.
   assoc('entry', {
-    index: path.join(context, 'src', `${name}.entry.js`),
+    index: path.join(context, 'src', `${name}.js`),
   }),
 
   // Define the build root context as the nearest directory containing a

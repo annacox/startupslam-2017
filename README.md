@@ -1,6 +1,6 @@
 # Analytics with ElasticSearch
 
-Slide deck: https://docs.google.com/presentation/d/1ubyoRG08TdUyf_rN_evLnFJ3iWkl1NDT4QzpegS0xqs/edit?usp=sharing
+Slide deck: https://docs.google.com/presentation/d/1ubyoRG08TdUyf_rN_evLnFJ3iWkl1NDT4QzpegS0xqs
 
 ## Setup
 
@@ -51,6 +51,9 @@ brew install node
 Getting the project locally:
 
 ```sh
-git clone WEEEEE
+git clone https://github.com/metalabdesign/startupslam-2017.git
+cd startupslam-2017
 npm install
+npm run dev
+open http://localhost:8080
 ```
