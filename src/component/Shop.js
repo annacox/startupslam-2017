@@ -28,7 +28,7 @@ class Shop extends React.Component {
       user: {
         gender: 'male',
         age: 22,
-        location: [49.2827, -123.1207],
+        location: {lat: 49.2827, lon: -123.1207},
       },
       os: ua.getOS().name,
       browser: ua.getBrowser().name,
@@ -117,7 +117,7 @@ class Shop extends React.Component {
     }
     navigator.geolocation.getCurrentPosition(({coords}) => {
       this.updateUser({
-        location: [coords.latitude, coords.longitude],
+        location: {lat: coords.latitude, lon: coords.longitude},
       });
     });
   }
@@ -410,8 +410,9 @@ class Shop extends React.Component {
           <div className='col-6 col-md-4'>
             <label>Location</label>
             <div className='pt-2 bt-2'>
-              {pathOr(0, ['user', 'location', 0], this.state).toFixed(3)}°,{' '}
-              {pathOr(0, ['user', 'location', 1], this.state).toFixed(3)}°
+              {pathOr(0, ['user', 'location', 'lat'], this.state).toFixed(3)}°,
+              {' '}
+              {pathOr(0, ['user', 'location', 'lon'], this.state).toFixed(3)}°
             </div>
           </div>
           <div className='col-6 col-md-3'>
