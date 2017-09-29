@@ -18,6 +18,13 @@ const formatPrice = (v) => {
   });
 };
 
+const getTotal = (cart) => {
+  return cart.reduce(
+    (t, {quantity, price}) => t + (quantity * price),
+    0
+  );
+};
+
 class Shop extends React.Component {
   constructor(props) {
     super(props);
@@ -181,6 +188,7 @@ class Shop extends React.Component {
       userGender: this.state.user.gender,
       userLocation: this.state.user.location,
       cartId: this.state.cartId,
+      cartTotal: getTotal(this.state.cart),
     });
   }
 
@@ -301,10 +309,7 @@ class Shop extends React.Component {
 
   renderCart() {
     const {cart} = this.state;
-    const total = cart.reduce(
-      (t, {quantity, price}) => t + (quantity * price),
-      0
-    );
+    const total = getTotal(cart);
     return (
       <div className='mt-3'>
         {cart.length <= 0 && (
