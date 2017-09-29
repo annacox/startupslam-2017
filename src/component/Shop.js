@@ -255,11 +255,7 @@ class Shop extends React.Component {
               <div className='p-3'>
                 <img
                   className='card-img-top'
-                  src={product.img
-                    .replace(/♀|♂/, '')
-                    .replace(' Jr.', '_Jr')
-                    .replace('Mr. ', 'Mr_')
-                  }
+                  src={product.img}
                   alt={product.name}
                 />
               </div>
